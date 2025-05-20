@@ -64,13 +64,13 @@ $$;
 ```
 CREATE OR REPLACE PROCEDURE sp_mostrar_clientes()
 LANGUAGE plpgsql AS $$
-DECLARE
+DECLARE 
   c RECORD;
 BEGIN
   FOR c IN SELECT customer_id, first_name, last_name FROM customer LIMIT 5
   LOOP
     RAISE NOTICE 'Cliente %: % %', c.customer_id, c.first_name, c.last_name;
-  END LOOP;
+  END LOOP; 
 END;
 $$;
 
