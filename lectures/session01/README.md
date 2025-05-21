@@ -1,11 +1,19 @@
 ****# Total de películas por categoría
 
 ```
+<<<<<<< HEAD
 select c."name", count(*)
     from film f
     inner join film_category fc
 on fc.film_id = f.film_id
 inner join category c
+=======
+ select f.title, c."name"
+ from film f
+ inner join film_category fc 
+on fc.film_id  = f.film_id
+inner join category c 
+>>>>>>> main
 on c.category_id = fc.category_id
 group by c."name";
 ```
@@ -13,6 +21,7 @@ group by c."name";
 # Total de películas por actor
 
 ```
+<<<<<<< HEAD
 select a.first_name, a.last_name, count(*)
 from actor a
     inner join film_actor fa
@@ -21,6 +30,9 @@ from actor a
     on f.film_id = fa.film_id
 group by a.first_name, a.last_name 
 order by count(*) desc
+=======
+
+>>>>>>> main
 ```
 
 # Total de pagos por cliente
