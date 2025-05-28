@@ -233,38 +233,26 @@ particionar por fecha dicha tabla para cada año.
 
 ```sql
 
+CREATE TABLE logs (
+  id BIGSERIAL NOT NULL,
+  user_id INTEGER NOT NULL,
+  action TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL
+) PARTITION BY RANGE (created_at);
 
--- Ejercicio 5
-EXPLAIN ANALYSE
-SELECT 
-  c.first_name || ' ' || c.last_name AS cliente,
-  cat.name AS categoria,
-  SUM(p.amount) AS total_pagado
-FROM customer c
-INNER JOIN rental r ON c.customer_id = r.customer_id
-INNER JOIN payment p ON p.rental_id = r.rental_id
-INNER JOIN inventory i ON r.inventory_id = i.inventory_id
-INNER JOIN film f ON i.film_id = f.film_id
-INNER JOIN film_category fc ON f.film_id = fc.film_id
-INNER JOIN category cat ON fc.category_id = cat.category_id
-WHERE 
-  r.rental_date >= '2005-01-01'
-  AND c.last_name LIKE 'B%'
-  AND fc.category_id IN (
-    SELECT category_id
-    FROM film_category
-    GROUP BY category_id
-    HAVING COUNT(film_id) > 5
-  )
-GROUP BY c.first_name, c.last_name, cat.name
-ORDER BY total_pagado DESC;
+CREATE TABLE logs_2022 PARTITION OF logs
+  FOR VALUES FROM ('2022-01-01') TO ('2023-01-01');
 
-CREATE INDEX idx_customer_last_name ON customer(last_name);
-CREATE INDEX idx_rental_date ON rental(rental_date);
-CREATE INDEX idx_category_name ON category(name);
-CREATE INDEX idx_film_category_category_id ON film_category(category_id);
-CREATE INDEX idx_inventory_film_id ON inventory(film_id);
-CREATE INDEX idx_payment_customer_id ON payment(customer_id);
+CREATE TABLE logs_2023 PARTITION OF logs
+  FOR VALUES FROM ('2023-01-01') TO ('2024-01-01');
+
+CREATE TABLE logs_2024 PARTITION OF logs
+  FOR VALUES FROM ('2024-01-01') TO ('2025-01-01');
+
+CREATE TABLE logs_2025 PARTITION OF logs
+  FOR VALUES FROM ('2025-01-01') TO ('2026-01-01');
+
+
 
 
 ```
