@@ -13,4 +13,4 @@ Insertar una pelicula o eliminar si hubiera un error
 
 ## Ranking de Clientes
 
-Ver el ranking de los 20 mejores clientes usando Srializable provocar un error para que se bloquee una transaccion. 
+Ver el ranking de los 20 mejores clientes usando **Srializable** provocar un error para que se bloquee una transaccion. 
