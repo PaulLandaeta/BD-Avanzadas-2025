@@ -17,7 +17,7 @@ services:
     networks:
       - bdnet
 
-volumes:
+volumes:  
   pgdata:
 
 networks:

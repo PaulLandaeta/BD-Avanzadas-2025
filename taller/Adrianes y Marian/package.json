@@ -1,0 +1,16 @@
+{
+  "name": "bdavanzada-videojuego",
+  "author": "Adrian Thompson, Ernesto Juarez and Marian Zamorano",
+  "license": "MIT",
+  "version": "1.0.0",
+  "scripts": {
+    "backup": "node ./backup.js",
+    "restore": "node ./restore.js",
+    "deleteBK": "node ./",
+    "rmvolumen": "docker volume rm proyectobasededatosavanzada_pgdata"
+  },
+  "dependencies": {
+    "cron": "^4.3.1",
+    "dotenv": "^16.5.0"
+  }
+}
