@@ -1,0 +1,69 @@
+version: '3.9'
+
+services:
+  pg-master:
+    image: postgres:15
+    container_name: pg-master
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: masterpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./master:/var/lib/postgresql/data
+
+  pg-slave:
+    image: postgres:15
+    container_name: pg-slave
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: slavepass
+    ports:
+      - "5433:5432"
+    depends_on:
+      - pg-master
+    volumes:
+      - ./slave:/var/lib/postgresql/data
+
+  exporter-master:
+    image: wrouesnel/postgres_exporter:latest
+    container_name: exporter-master
+    restart: always
+    environment:
+      DATA_SOURCE_NAME: "postgresql://postgres:masterpass@pg-master:5432/postgres?sslmode=disable"
+    depends_on:
+      - pg-master
+    ports:
+      - "9187:9187"
+
+  exporter-slave:
+    image: wrouesnel/postgres_exporter:latest
+    container_name: exporter-slave
+    restart: always
+    environment:
+      DATA_SOURCE_NAME: "postgresql://postgres:slavepass@pg-slave:5432/postgres?sslmode=disable"
+    depends_on:
+      - pg-slave
+    ports:
+      - "9188:9187"
+
+  prometheus:
+    image: prom/prometheus:v2.52.0
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana:/var/lib/grafana
