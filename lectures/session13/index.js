@@ -52,7 +52,7 @@ const insertData = async (data) => {
         await sqlSanta`insert into student(id, name) values(${data.id},${data.name})`
     } else {
         // HASH (id) data.id ya fue hasheado
-        const bd = data.id % 2;
+        const bd = data.id % 2; //0 > lapaz 1 >santa cruz 
         if( bd === 0) {
             await sqlLaPaz`insert into student(id, name) values(${data.id},${data.name})`
         } else {
