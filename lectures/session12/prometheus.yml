@@ -1,0 +1,12 @@
+lectures/session12/prometheus/prometheus.yml
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'pg-master'
+    static_configs:
+      - targets: ['exporter-master:9187']
+
+  - job_name: 'pg-slave'
+    static_configs:
+      - targets: ['exporter-slave:9187']
