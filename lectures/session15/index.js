@@ -42,7 +42,7 @@ const setStudentCache = async (key, data) => {
 // setStudentCache(`STUDENT_KEY${2}`, { id: 2, name: 'paul'});
 
 const getStudent = async (id) => {
-  const redisKey = `STUDENT_KEY${id}`;
+  const redisKey = `${STUDENT_KEY}${id}`;
   const cachedData = await getStudentCache(redisKey);
   if(cachedData) {
     console.log('From Redis', cachedData);
@@ -53,6 +53,14 @@ const getStudent = async (id) => {
   console.log(response);
   setStudentCache(redisKey, response);
   return response;
+}
+
+const setStudent = async (data) => {
+   const redisKey = `${STUDENT_KEY}${data.id}`;
+   const response = await setStudentData(data);
+   if(response.ok) {
+    await setStudentCache(redisKey, response);
+   }
 }
 
 getStudent(1);
