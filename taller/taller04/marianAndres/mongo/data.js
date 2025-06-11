@@ -1,0 +1,279 @@
+use centromedico;
+
+    db.createCollection("Turnos");
+    db.createCollection("Pacientes");
+
+    db.Turnos.insertMany([
+        {
+            id: '1',
+            fechaYHora: ISODate("2025-06-10T08:00:00Z"),
+            nombreHospital: 'Hospital Vida Sana',
+            nombreDoctor: 'Dr. Miguel',
+            apellidoDoctor: 'Gomez',
+            estado: 'confirmado',
+            comentario: 'Tiene rinitis alergica.',
+            id_paciente: '1'
+            },
+        {
+            id: '2',
+            fechaYHora: ISODate("2025-06-10T09:00:00Z"),
+            nombreHospital: 'Hospital Vida Sana',
+            nombreDoctor: 'Dr. Miguel',
+            apellidoDoctor: 'Gomez',
+            estado: 'no confirmado',
+            comentario: 'Cirugia en 2 semanas.',
+            id_paciente: '2'
+            },
+        {
+            id: '3',
+            fechaYHora: ISODate("2025-06-11T08:00:00Z"),
+            nombreHospital: 'Hospital Vida Sana',
+            nombreDoctor: 'Dr. Miguel',
+            apellidoDoctor: 'Gomez',
+            estado: 'no confirmado',
+            comentario: 'Cirugia en 2 semanas.',
+            id_paciente: '3'
+            },
+        {
+            id: '4',
+            fechaYHora: ISODate("2025-06-11T09:00:00Z"),
+            nombreHospital: 'Hospital Vida Sana',
+            nombreDoctor: 'Dr. Miguel',
+            apellidoDoctor: 'Gomez',
+            estado: 'no confirmado',
+            comentario: 'Cirugia en 2 semanas.',
+            id_paciente: '3'
+            },
+        {
+            id: '5',
+            fechaYHora: ISODate("2025-06-15T08:00:00Z"),
+            nombreHospital: 'Hospital Vida Sana',
+            nombreDoctor: 'Dr. Miguel',
+            apellidoDoctor: 'Gomez',
+            estado: 'confirmado',
+            comentario: 'Cirugia en 2 semanas.',
+            id_paciente: '1'
+            },
+        {
+            id: '6',
+            fechaYHora: ISODate("2025-06-15T09:00:00Z"),
+            nombreHospital: 'Hospital Vida Sana',
+            nombreDoctor: 'Dr. Miguel',
+            apellidoDoctor: 'Gomez',
+            estado: 'no confirmado',
+            comentario: 'Cirugia en 2 semanas.',
+            id_paciente: '2'
+            },
+        {
+            id: '7',
+            fechaYHora: ISODate("2025-06-15T10:00:00Z"),
+            nombreHospital: 'Hospital Vida Sana',
+            nombreDoctor: 'Dr. Miguel',
+            apellidoDoctor: 'Gomez',
+            estado: 'pendiente',
+            comentario: 'Cirugia en 2 semanas.',
+            id_paciente: '3'
+            },
+        {
+            id: '8',
+            fechaYHora: ISODate("2025-06-15T11:00:00Z"),
+            nombreHospital: 'Hospital Vida Sana',
+            nombreDoctor: 'Dr. Miguel',
+            apellidoDoctor: 'Gomez',
+            estado: 'pendiente',
+            comentario: 'Cirugia en 2 semanas.',
+            id_paciente: '4'
+            },
+        {
+            id: '9',
+            fechaYHora: ISODate("2025-06-15T12:00:00Z"),
+            nombreHospital: 'Hospital Vida Sana',
+            nombreDoctor: 'Dr. Miguel',
+            apellidoDoctor: 'Gomez',
+            estado: 'confirmado',
+            comentario: 'Cirugia en 2 semanas.',
+            id_paciente: '5'
+            },
+        {
+            id: '10',
+            fechaYHora: ISODate("2025-06-15T13:00:00Z"),
+            nombreHospital: 'Hospital Vida Sana',
+            nombreDoctor: 'Dr. Samuel',
+            apellidoDoctor: 'Lopez',
+            estado: 'pendiente',
+            comentario: 'Cirugia en 2 semanas.',
+            id_paciente: '3'
+            },
+        {
+            id: '11',
+            fechaYHora: ISODate("2025-06-15T14:00:00Z"),
+            nombreHospital: 'Hospital Vida Sana',
+            nombreDoctor: 'Dr. Samuel',
+            apellidoDoctor: 'Lopez',
+            estado: 'confirmado',
+            comentario: 'Cirugia en 2 semanas.',
+            id_paciente: '2'
+            },
+        ])
+
+    db.Pacientes.insertMany([
+        {
+            id: '1',
+            nombre: 'Felipe',
+            apellido: 'Montes',
+            primerNumero: 70662653,
+            segundoNumero: 71811113,
+            historial: [
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura'
+                    },
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura'
+                    },
+                {
+                    descripcion: 'Dolor en cabeza',
+                    diagnostico: 'Resfrio'
+                    },
+                {
+                    descripcion: 'Escalofrios',
+                    diagnostico: 'Ansiedad'
+                    },
+                ],
+            fechaDeNacimiento: ISODate("1985-06-15T14:00:00Z")
+            },
+        {
+            id: '2',
+            nombre: 'Melisa',
+            apellido: 'Marquez',
+            primerNumero: 70123453,
+            segundoNumero: 71812343,
+            historial: [
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura terminal'
+                    },
+                {
+                    descripcion: 'Dolor en cabeza',
+                    diagnostico: 'Resfrio suave'
+                    },
+                {
+                    descripcion: 'Escalofrios',
+                    diagnostico: 'Tiene frio'
+                    }],
+            fechaDeNacimiento: ISODate("1984-05-15T14:00:00Z")
+            },
+        {
+            id: '3',
+            nombre: 'Federico',
+            apellido: 'Callapa',
+            primerNumero: 70661233,
+            segundoNumero: 71231113,
+            historial: [
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura'
+                    },
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura'
+                    },
+                {
+                    descripcion: 'Dolor en cabeza',
+                    diagnostico: 'Resfrio'
+                    },
+                {
+                    descripcion: 'Escalofrios',
+                    diagnostico: 'Ansiedad'
+                    },
+                ],
+            fechaDeNacimiento: ISODate("1982-02-15T14:00:00Z")
+            },
+        {
+            id: '4',
+            nombre: 'Fernanda',
+            apellido: 'Luis',
+            primerNumero: 70662987,
+            segundoNumero: 71811113,
+            historial: [
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura'
+                    },
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura'
+                    },
+                {
+                    descripcion: 'Dolor en cabeza',
+                    diagnostico: 'Resfrio'
+                    },
+                {
+                    descripcion: 'Escalofrios',
+                    diagnostico: 'Ansiedad'
+                    },
+                ],
+            fechaDeNacimiento: ISODate("1981-01-15T14:00:00Z")
+            },
+        {
+            id: '5',
+            nombre: 'Lily',
+            apellido: 'Blue',
+            primerNumero: 70665453,
+            segundoNumero: 71816547,
+            historial: [
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura'
+                    },
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura'
+                    },
+                {
+                    descripcion: 'Dolor en cabeza',
+                    diagnostico: 'Resfrio'
+                    },
+                {
+                    descripcion: 'Escalofrios',
+                    diagnostico: 'Ansiedad'
+                    },
+                ],
+            fechaDeNacimiento: ISODate("1990-03-15T14:00:00Z")
+            },
+        {
+            id: '6',
+            nombre: 'Andrei',
+            apellido: 'Perez',
+            primerNumero: 76987653,
+            segundoNumero: 71815913,
+            historial: [
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura'
+                    },
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura'
+                    },
+                {
+                    descripcion: 'Dolor en cabeza',
+                    diagnostico: 'Resfrio'
+                    },
+                {
+                    descripcion: 'Escalofrios',
+                    diagnostico: 'Ansiedad'
+                    },
+                ],
+            fechaDeNacimiento: ISODate("1995-04-15T14:00:00Z")
+            },
+        ])
+
+    db.Turnos.find()
+
+
+
+    db.Pacientes.find()
+
+
