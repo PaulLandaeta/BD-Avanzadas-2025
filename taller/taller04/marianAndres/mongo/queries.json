@@ -1,0 +1,23 @@
+    db.Turnos.find({
+        fechaYHora: {$gte: ISODate("2025-06-15T00:00:00Z"), $lte: ISODate("2025-06-15T23:59:59Z")},
+        estado: 'confirmado'
+        });
+
+    //Quiero ver todos los comentarios médicos registrados en esos turnos.
+    db.Turnos.find({
+        fechaYHora: {$gte: ISODate("2025-06-15T00:00:00Z"), $lte: ISODate("2025-06-15T23:59:59Z")},
+        estado: 'confirmado',
+        comentario: {$exists: true}
+    });
+
+    //¿Cuántos pacientes tengo con más de 40 años y al menos dos teléfonos registrados?
+    db.Pacientes.find({
+        fechaDeNacimiento: {$lte: ISODate("1986-01-01T00:00:00Z")},
+        primerNumero: {$exists: true},
+        segundoNumero: {$exists: true}
+    });
+
+    //Necesito ver los pacientes que tienen turnos pendientes aún sin atender.
+    db.Turnos.find({
+        $or:[{estado: 'pendiente'}, {estado: 'no confirmado'}]
+    });

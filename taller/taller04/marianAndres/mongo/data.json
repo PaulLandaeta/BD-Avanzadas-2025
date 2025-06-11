@@ -268,10 +268,43 @@ use centromedico;
                 ],
             fechaDeNacimiento: ISODate("1995-04-15T14:00:00Z")
             },
+        {
+            id: '7',
+            nombre: 'Dylan',
+            apellido: 'Sardan',
+            primerNumero: 76987653,
+            historial: [
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura'
+                    },
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura'
+                    },
+                ],
+            fechaDeNacimiento: ISODate("1995-04-15T14:00:00Z")
+            },
+        {
+            id: '8',
+            nombre: 'Vartolome',
+            apellido: 'Yupanqui',
+            primerNumero: 76987653,
+            historial: [
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura'
+                    },
+                {
+                    descripcion: 'Dolor en pierna',
+                    diagnostico: 'Fractura'
+                    },
+                ],
+            fechaDeNacimiento: ISODate("1995-04-15T14:00:00Z")
+            },
         ])
 
     db.Turnos.find()
-
 
 
     db.Pacientes.find()
