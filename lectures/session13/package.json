@@ -3,14 +3,22 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node db.js"
+=======
+    "dev": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+>>>>>>> 0a4d43f148d82875043bd48bd3156b1cc3b037c4
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
+<<<<<<< HEAD
   "type": "module",
+=======
+>>>>>>> 0a4d43f148d82875043bd48bd3156b1cc3b037c4
   "dependencies": {
     "postgres": "^3.4.7"
   }
