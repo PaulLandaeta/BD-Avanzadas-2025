@@ -24,6 +24,7 @@ Thumbs.db
 # Archivos de editor
 .vscode/
 .idea/
+/node_modules
 /lectures/session12/grafana
 /lectures/session12/master
 /lectures/prometheus
