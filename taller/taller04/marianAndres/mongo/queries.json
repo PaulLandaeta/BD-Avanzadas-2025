@@ -1,3 +1,4 @@
+    //Necesito revisar mis turnos del 15 de junio de 2025. Solo los confirmados.
     db.Turnos.find({
         fechaYHora: {$gte: ISODate("2025-06-15T00:00:00Z"), $lte: ISODate("2025-06-15T23:59:59Z")},
         estado: 'confirmado'
