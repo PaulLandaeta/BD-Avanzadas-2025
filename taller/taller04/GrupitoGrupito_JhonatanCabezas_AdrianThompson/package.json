@@ -1,0 +1,17 @@
+{
+  "name": "taller4",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node Parte1.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "postgres": "^3.4.7",
+    "redis": "^5.5.6"
+  }
+}

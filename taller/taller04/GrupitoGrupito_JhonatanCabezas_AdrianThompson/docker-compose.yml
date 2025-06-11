@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  mongo:
+    image: mongo:6.0
+    restart: always
+    container_name: mongo
+    ports:
+      - '27037:27017' #Se cambio a 27037 porque estaba siendo usado por otro
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo123
+    volumes:
+      - mongodata:/data/db
+
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass root123
+    volumes: 
+      - cache:/data
+    
+  postgres:
+    image: postgres:15
+    container_name: postgrestaller4
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+    - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+  mariadbdata:
+  mongodata:
+  redisdata:
+  cache:
+    driver: local

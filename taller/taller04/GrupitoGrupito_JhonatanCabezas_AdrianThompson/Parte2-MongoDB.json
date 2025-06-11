@@ -1,0 +1,123 @@
+// Taller 4
+// Grupo Jhonatan Cabezas y Adrian Thompson
+
+// CLINICA NUTRICIONAL
+use clinica_nutricional
+
+db.doctors.insertMany([
+    {
+    name:'Jhonatan',
+    specialty:'Pediatra',
+    email: 'jhon@gmail.com',
+    phone: 12345678,
+    },
+    {
+    name:'Adrian',
+    specialty:'Nutricion',
+    email: 'adrian@gmail.com',
+    phone: 87654321,
+    },
+    {
+    name:'Zein',
+    specialty:'Pediatra',
+    email: 'zein@gmail.com',
+    phone: 13424567,
+    }
+]);
+
+db.patients.insertMany([
+    {
+    name: 'Roxana',
+    birthdate: ISODate("1999-06-12"),
+    phones: [12345678, 98765432],
+    email: 'roxana@gmail.com'
+    },
+    {
+    name: 'Juan',
+    birthdate: ISODate("1999-06-12"),
+    phones: [90345678],
+    email: 'juan@gmail.com'
+    },
+    {
+    name: 'Roberto',
+    birthdate: ISODate("1960-06-12"),
+    phones: [90345678, 98765432, 12345678],
+    email: 'robert@gmail.com'
+    }
+]);
+db.patients.find({});
+var patient1 = db.patients.findOne({ name: "Roxana" })._id
+var patient2 = db.patients.findOne({ name: "Juan" })._id
+var patient3= db.patients.findOne({ name: "Juan" })._id // Se reppite para probar
+
+var doctor1 = db.doctors.findOne({ name: "Jhonatan" })._id
+var doctor2 = db.doctors.findOne({ name: "Adrian" })._id
+
+
+db.appointments.insertMany([
+    {
+    patient_id: patient1,
+    doctor_id: doctor1,
+    date: ISODate("2025-06-15T08:30:00Z"),
+    status: "confirmado",
+    notes: [
+      { timestamp: ISODate("2025-06-15T08:45:00Z"), comment: "Paciente con deficiencia de hierro. Recomendado lentejas, espinaca y carne roja." },
+      { timestamp: ISODate("2025-06-15T08:50:00Z"), comment: "Peso estable. Mantener dieta actual." }
+    ]
+    },
+    {
+    patient_id: patient2,
+    doctor_id: doctor1,
+    date: ISODate("2025-06-15T09:30:00Z"),
+    status: "confirmado",
+    notes: [
+      { timestamp: ISODate("2025-06-15T09:40:00Z"), comment: "Paciente con obesidad tipo I. Se prescribe dieta baja en carbohidratos." }
+    ]
+    },
+    {
+    patient_id: patient3,
+    doctor_id: doctor2,
+    date: ISODate("2025-06-16T10:00:00Z"),
+    status: "pendiente",
+    notes: []
+    }
+]);
+db.clinina_nutricional.find({});
+
+
+// Primera consulta: Turnos del 15 de junio de 2025, solo confirmados
+db.appointments.find({
+  date: {
+    $gte: ISODate("2025-06-15T00:00:00Z"),
+    $lt: ISODate("2025-06-16T00:00:00Z")
+  },
+  status: "confirmado"
+});
+
+// Segunda consulta: Todos los comentarios médicos registrados en esos turnos
+db.appointments.find({
+  date: {
+    $gte: ISODate("2025-06-15T00:00:00Z"),
+    $lt: ISODate("2025-06-16T00:00:00Z")
+  },
+  status: "confirmado"
+}, {
+  notes: 1,
+  _id: 0
+});
+
+// Tercera consulta: ¿Cuántos pacientes tienen más de 40 años y al menos dos teléfonos?
+db.patients.find({
+  birthdate: { $lt: ISODate("1985-01-01T00:00:00Z") },
+  $expr: { $gte: [ { $size: "$phones" }, 2 ] }
+});
+
+
+// Cuarta consulta: Pacientes con turnos pendientes aún sin atender
+db.appointments.find({ status: "pendiente" }, { patient_id: 1, _id: 0 });
+// Para buscar el paciente con la id obtenida del resultado anterior que es el que esta pendiente
+db.patients.find({
+  _id: { $in: [ObjectId("6849d910119fe45de1372b71")]}
+});
+
+
