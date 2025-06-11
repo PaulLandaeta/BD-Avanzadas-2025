@@ -24,3 +24,13 @@ Thumbs.db
 # Archivos de editor
 .vscode/
 .idea/
+/lectures/session12/grafana
+/lectures/session12/master
+/lectures/prometheus
+/lectures/session12/slave
+
+/lectures/session14/grafana_data
+/lectures/session14/primary_data/data
+/lectures/session14/replica_data/data
+/lectures/session13/node_modules
+/lectures/session15/node_modules

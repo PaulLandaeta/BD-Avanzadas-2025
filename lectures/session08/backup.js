@@ -9,9 +9,8 @@ const job = new cron.CronJob(
         const dockerContainer = 'bdavanzada-postgres';
         const DBUser = 'paul';
         const database = 'dvdrental';
-        const folder = '/tmp';
         const currentDate = new Date();
-        const fileName = `backup_${currentDate.toISOString().slice(0, 10)}.dump`;
+        const fileName = `backup_${currentDate.toISOString().slice(0, 15)}.dump`;
         const backupCommand = `docker exec -u ${dockerUser} ${dockerContainer} \
             pg_dump -U ${DBUser} -F c -d ${database} -f /tmp/${fileName}`
 
