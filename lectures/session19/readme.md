@@ -117,6 +117,9 @@ db.productos.updateOne(
 )
 ```
 
+// PIPELINE
+// Secuencia de pasos 
+// [$ match,  ]
 
 ### Operador $group de Agregación
 
