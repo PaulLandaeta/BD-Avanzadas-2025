@@ -1,0 +1,100 @@
+db.createCollection('products');
+
+db.products.insertMany([
+                           {
+                             "_id": "p001",
+                             "name": "Aceite de cocina",
+                             "category": "Alimentos",
+                             "price": 30
+                           },
+                           {
+                             "_id": "p002",
+                             "name": "Detergente",
+                             "category": "Limpieza",
+                             "price": 25
+                           },
+                           {
+                             "_id": "p003",
+                             "name": "Leche",
+                             "category": "Alimentos",
+                             "price": 10
+                           }
+                         ]);
+
+db.createCollection('customers');
+
+
+db.customers.insertMany([
+                            {
+                              "_id": "c001",
+                              "name": "Luc\u00eda Quispe",
+                              "age": 32,
+                              "city": "La Paz"
+                            },
+                            {
+                              "_id": "c002",
+                              "name": "Carlos R\u00edos",
+                              "age": 45,
+                              "city": "Cochabamba"
+                            },
+                            {
+                              "_id": "c003",
+                              "name": "Ana Mamani",
+                              "age": 29,
+                              "city": "La Paz"
+                            }
+                          ])
+
+
+db.createCollection("sales");
+
+
+db.sales.insertMany([
+                        {
+                          "_id": "s001",
+                          "customerId": "c001",
+                          "items": [
+                            {
+                              "productId": "p001",
+                              "quantity": 2
+                            },
+                            {
+                              "productId": "p003",
+                              "quantity": 4
+                            }
+                          ],
+                          "date": {
+                            "$date": "2025-06-01T09:30:00Z"
+                          }
+                        },
+                        {
+                          "_id": "s002",
+                          "customerId": "c002",
+                          "items": [
+                            {
+                              "productId": "p002",
+                              "quantity": 1
+                            }
+                          ],
+                          "date": {
+                            "$date": "2025-06-02T14:00:00Z"
+                          }
+                        },
+                        {
+                          "_id": "s003",
+                          "customerId": "c001",
+                          "items": [
+                            {
+                              "productId": "p001",
+                              "quantity": 1
+                            },
+                            {
+                              "productId": "p002",
+                              "quantity": 2
+                            }
+                          ],
+                          "date": {
+                            "$date": "2025-06-05T11:15:00Z"
+                          }
+                        }
+                      ])
