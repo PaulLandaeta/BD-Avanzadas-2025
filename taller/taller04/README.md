@@ -7,7 +7,7 @@ Crear una pequeña app con NodeJS que guarde y consulte informacion de un usuari
 - Guardar informacion de un usuario en Redis: nombre, correo, ciudad, permisos, roles.
 - Obtener informacion por user_id 
 - Establecer expiracion de 5 minutos.
-- Contar cuantas veces se ha solicitado ese usaurio. 
+- Contar cuantas veces se ha solicitado ese usuario. 
 - en la base de datos se debe tener las tablas, user, roles, permisos. 
 
 ### Resultados esperados 
