@@ -1,0 +1,10 @@
+1. Extracción (Extract)
+Obtebe datos clave de la base de datos transaccional dvdRental (pagos, clientes, películas, etc.).
+Por medio de Consultas SQL para extraer ventas por país/mes, películas rentables, ventas por tienda, género y gasto promedio por cliente.
+Todo esto para tener listo los datos que neceisto para realizar la consulta general  listo para transformar
+2. Transformación (Transform)
+Limpiar y estructurar datos para el esquema Copo de Nieve pero primero estrella.
+Crear tabla temporal (sales_staging) para aglomerar datos, eliminar duplicados y preparar jerarquías (país-ciudad, género-película). Asi para dar los datos transformados y organizados.
+3. Carga (Load)
+Hacer el copo de nieve primero con la estrella y de eso viendo si se puede desnormalizar mas para formar el copo de nieve. Tabla de hechos (fact_sales) y dimensiones (dim_time, dim_country, dim_store, etc.) con relaciones jerárquicas.
+En la insercion de datos, se hizo con CONFLICTS, para el manejo de datos redundantes y una vez heco, se pudo completar y hacer nuevas consultas a copo de nieve.
