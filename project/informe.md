@@ -35,10 +35,8 @@
 
 5. **Diseño de la Base de Datos**
 
--   Modelo NoSQL.
--   Estructura de documentos y colecciones.
--   Modelo de datos y almacenamiento para Big Data.
--   Arquitectura de almacenamiento y procesamiento.
+-   Modelo NoSQL. (Diagrama No relacional )
+-   Estructura de documentos y colecciones. (Descripcion de Los documentos Esquemas ) 
 
 6. **Arquitectura y Justificación Técnica**
 -   Decribir la arquitectura general del sistema propuesto, incluir un diagrama de componentes de alto nivel. Se deben explicar que tecnologias se eligieron y por que. 
