@@ -17,6 +17,14 @@ services:
     networks:
       - bdnet
 
+  postgresWD:
+    image: postgres:15
+    container_name: bdavanzada-postgresWD
+    ports:
+      - "5443:5443"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
 volumes:
   pgdata:
 
