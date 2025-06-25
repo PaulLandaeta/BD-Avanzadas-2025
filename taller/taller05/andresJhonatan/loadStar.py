@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import psycopg2
 import pandas as pd
 from datetime import datetime
@@ -16,7 +14,7 @@ SOURCE_CONFIG = {
 
 TARGET_CONFIG = {
     'host': 'localhost', 
-    'database': 'dvdrental_dw',
+    'database': 'dvdrental',
     'user': 'nameUser',
     'password': 'passwordUser',
     'port': 5432
@@ -50,7 +48,7 @@ CREATE TABLE dvdrental_dw.dim_time (
     quarter INT NOT NULL,
     month INT NOT NULL,
     month_name VARCHAR(20) NOT NULL,
-    day INT NOT NULL,
+    day INT NOT NULL
 );
 
 -- Dimensión Cliente
@@ -73,11 +71,10 @@ CREATE TABLE dvdrental_dw.dim_film (
     title VARCHAR(255) NOT NULL,
     description TEXT,
     release_year INT,
-    language VARCHAR(20),
     rating VARCHAR(10),
     length INT,
     rental_duration INT NOT NULL,
-    rental_rate DECIMAL(4,2) NOT NULL,
+    rental_rate DECIMAL(4,2) NOT NULL
 );
 
 -- Dimensión Categoría
@@ -161,7 +158,7 @@ print("\n📅 Cargando dimensión TIEMPO...")
 
 time_sql = """
 INSERT INTO dvdrental_dw.dim_time (
-    full_date, year, quarter, month, month_name, day,
+    full_date, year, quarter, month, month_name, day
 )
 SELECT DISTINCT
     DATE(p.payment_date) as full_date,
@@ -169,7 +166,7 @@ SELECT DISTINCT
     EXTRACT(QUARTER FROM p.payment_date) as quarter,
     EXTRACT(MONTH FROM p.payment_date) as month,
     TO_CHAR(p.payment_date, 'Month') as month_name,
-    EXTRACT(DAY FROM p.payment_date) as day,
+    EXTRACT(DAY FROM p.payment_date) as day
 FROM payment p
 ORDER BY full_date;
 """
@@ -196,7 +193,7 @@ SELECT
     c.first_name,
     c.last_name,
     c.email,
-    c.active,
+    c.activebool,
     c.create_date
 FROM customer c
 ORDER BY c.customer_id;
@@ -217,22 +214,19 @@ print("\n🎬 Cargando dimensión PELÍCULA...")
 
 film_sql = """
 INSERT INTO dvdrental_dw.dim_film (
-    film_id, title, description, release_year, language, rating, 
-    length, rental_duration, rental_rate, replacement_cost
+    film_id, title, description, release_year, rating, 
+    length, rental_duration, rental_rate
 )
 SELECT 
     f.film_id,
     f.title,
     f.description,
     f.release_year,
-    l.name as language,
     f.rating,
     f.length,
     f.rental_duration,
-    f.rental_rate,
-    f.replacement_cost
+    f.rental_rate
 FROM film f
-JOIN language l ON f.language_id = l.language_id
 ORDER BY f.film_id;
 """
 
@@ -413,34 +407,6 @@ try:
 except Exception as e:
     print(f"❌ Error cargando tabla de HECHOS: {e}")
 
-# ===== CREAR ÍNDICES PARA OPTIMIZACIÓN =====
-print("\n🔍 Creando índices para optimización...")
-
-indexes_sql = """
--- Índices en tabla de hechos
-CREATE INDEX IF NOT EXISTS idx_fact_customer ON dvdrental_dw.fact_sales(customer_key);
-CREATE INDEX IF NOT EXISTS idx_fact_film ON dvdrental_dw.fact_sales(film_key);
-CREATE INDEX IF NOT EXISTS idx_fact_store ON dvdrental_dw.fact_sales(store_key);
-CREATE INDEX IF NOT EXISTS idx_fact_time ON dvdrental_dw.fact_sales(time_key);
-CREATE INDEX IF NOT EXISTS idx_fact_location ON dvdrental_dw.fact_sales(location_key);
-CREATE INDEX IF NOT EXISTS idx_fact_category ON dvdrental_dw.fact_sales(category_key);
-CREATE INDEX IF NOT EXISTS idx_fact_payment_date ON dvdrental_dw.fact_sales(payment_date);
-
--- Índices en dimensiones
-CREATE INDEX IF NOT EXISTS idx_time_date ON dvdrental_dw.dim_time(full_date);
-CREATE INDEX IF NOT EXISTS idx_time_year_month ON dvdrental_dw.dim_time(year, month);
-CREATE INDEX IF NOT EXISTS idx_location_country ON dvdrental_dw.dim_location(country);
-CREATE INDEX IF NOT EXISTS idx_film_rating ON dvdrental_dw.dim_film(rating);
-CREATE INDEX IF NOT EXISTS idx_category_name ON dvdrental_dw.dim_category(category_name);
-"""
-
-try:
-    with target_conn.cursor() as cursor:
-        cursor.execute(indexes_sql)
-        target_conn.commit()
-    print("✅ Índices creados exitosamente")
-except Exception as e:
-    print(f"❌ Error creando índices: {e}")
 
 # ===== VERIFICACIÓN FINAL =====
 print("\n🔍 Verificación final del Data Warehouse...")
@@ -467,53 +433,6 @@ for table_name, query in verification_queries:
     except Exception as e:
         print(f"{table_name:<20}: ERROR - {e}")
 
-# ===== PRUEBA DE CONSULTAS ANALÍTICAS =====
-print("\n🧪 Ejecutando consultas de prueba...")
-
-test_queries = [
-    ("Total ventas por país (top 5)", """
-        SELECT 
-            dl.country,
-            SUM(fs.payment_amount) as total_ventas,
-            COUNT(*) as total_transacciones
-        FROM dvdrental_dw.fact_sales fs
-        JOIN dvdrental_dw.dim_location dl ON fs.location_key = dl.location_key
-        GROUP BY dl.country
-        ORDER BY total_ventas DESC
-        LIMIT 5;
-    """),
-    
-    ("Películas más rentables por rating", """
-        SELECT 
-            df.rating,
-            SUM(fs.payment_amount) as ingresos_totales,
-            COUNT(*) as total_rentas
-        FROM dvdrental_dw.fact_sales fs
-        JOIN dvdrental_dw.dim_film df ON fs.film_key = df.film_key
-        GROUP BY df.rating
-        ORDER BY ingresos_totales DESC;
-    """),
-    
-    ("Ventas por tienda", """
-        SELECT 
-            ds.store_id,
-            CONCAT(ds.manager_first_name, ' ', ds.manager_last_name) as gerente,
-            SUM(fs.payment_amount) as ventas_totales,
-            COUNT(*) as total_transacciones
-        FROM dvdrental_dw.fact_sales fs
-        JOIN dvdrental_dw.dim_store ds ON fs.store_key = ds.store_key
-        GROUP BY ds.store_id, gerente
-        ORDER BY ventas_totales DESC;
-    """)
-]
-
-for test_name, query in test_queries:
-    print(f"\n📈 {test_name}:")
-    try:
-        df = pd.read_sql(query, target_conn)
-        print(df.to_string(index=False))
-    except Exception as e:
-        print(f"❌ Error en consulta: {e}")
 
 # ===== CIERRE DE CONEXIONES =====
 source_conn.close()
@@ -522,5 +441,4 @@ target_conn.close()
 print("\n" + "=" * 60)
 print("🎉 ETL COMPLETADO EXITOSAMENTE")
 print(f"⏰ Proceso finalizado")
-print("📁 Revisa el archivo 'etl_load.log' para detalles completos")
 print("=" * 60)
