@@ -50,7 +50,6 @@
     -   Base de datos Distribuidas. 
     -   REDIS (CACHE)
     -   Consultas MongoDB
-    -   Big Data, ETL, Diagrama Snowflake.
 -   Herramientas y tecnologías utilizadas.
     -   Docker Compose con las diferentes Bds solo nombrar los files no el codigo.	
 
